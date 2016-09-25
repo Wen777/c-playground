@@ -1,0 +1,11 @@
+language: c
+
+compiler:
+    - clang
+    - gcc
+
+script:
+    - cd ex1-hello-world && make config && make build && make test
+
+notifications:
+    email: false
