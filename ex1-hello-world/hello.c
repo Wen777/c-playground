@@ -8,7 +8,7 @@
 TEST x_should_equal_1(void) {
     int x = 1;
     ASSERT_EQ(1, x);                              /* default message */
-    ASSERT_EQm("yikes, x doesn't equal 1", 1, x); /* custom message */
+    ASSERT_EQm("yikes, x doesn't equal 1", 2, x); /* custom message */
     /* printf expected and actual values as "%d" if they differ */
     ASSERT_EQ_FMT(1, x, "%d");
     PASS();
