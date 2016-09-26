@@ -16,7 +16,8 @@ build: greatest.h
 	${CC} hello.c -o hello ${CFLAGS};
 
 test:
-	./hello;
+	${CC} -o test_case ${CFLAGS} hello.c hello_test.c ;
+	./test_case;
 
 clean:
-	rm -f ${PROGRAMS_C} *.o *.core
+	rm -f ${PROGRAMS_C} *.o *.core greatest.h
