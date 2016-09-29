@@ -2,6 +2,8 @@
 
 ## Quick start
 
+---Following commands only support Unix* like os---
+
 ```{shell}
 make build
 make test

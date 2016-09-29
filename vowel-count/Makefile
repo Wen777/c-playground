@@ -1,6 +1,6 @@
 
 build:
-	${CC} main.c -o main ${CFLAGS};
+	${CC} assignment_1_D0565617.c -o main ${CFLAGS};
 
 test: test1 test2
 

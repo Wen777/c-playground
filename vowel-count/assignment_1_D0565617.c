@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <string.h>
 
+// ID: D0565617, Name:施文祥, David
+
 int main(void) {
   // A string is represented as a character array.
   // A word of string is of maximum 30 characters.
@@ -14,6 +16,7 @@ int main(void) {
     for (j=0; j<strlen(word); j++) {
       switch (word[j]) {
         case '-':
+            // if true, jump to 'Skip'
             if(word[j+1] == '-') goto Skip;
         case '\'':
             word[j] = ' ';
@@ -28,7 +31,7 @@ int main(void) {
         case '.':
             word[j] = ' ';
       }
-
+      // Do not print empty word
       if (word[j] != ' ') {
         printf("%c", word[j]);
       }
@@ -41,7 +44,8 @@ int main(void) {
       printf("\n");
       word_count = 0;
     }
-
+    
+    // Jump to here if the char is '-'
     Skip:
 
     for (i=0; i<strlen(word); i++) // Check every character is word.
