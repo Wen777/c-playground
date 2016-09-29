@@ -27,18 +27,14 @@ int main(void) {
             word[j] = ' ';
         case '.':
             word[j] = ' ';
-        // case '\n':
-        //     word[j] = ' ';
       }
 
       if (word[j] != ' ') {
         printf("%c", word[j]);
       }
     }
-    Print:
 
     printf("#");
-
 
     word_count += 1;
     if (word_count==12) {
