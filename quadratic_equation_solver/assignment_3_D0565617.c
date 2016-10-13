@@ -18,13 +18,19 @@ int main(void) {
     judge = (b * b) - 4 * a *c;
     if (judge < 0) {
         // complex   
-        if (a == 1) {
+        if (a == 1.0) {
             printf("X**2");
+        } else if (a == -1.0) {
+            printf("-X");
         } else {
             printf("%6.4fX**2", a);
         }
 
-        if (b > 0) {
+        if (b == 1.0) {
+            printf("+ X");
+        } else if (b == -1.0) {
+            printf("- X");
+        } else if (b > 0) {
             printf("+ %6.4fX", b);
         } else if (b < 0) {
             printf("%6.4fX", b);
@@ -33,22 +39,33 @@ int main(void) {
         if (c > 0) {
             printf("+ %6.4f", c);
         } else if (c < 0) {
-            printf("- %6.4f", c);
+            printf(" %6.4f", c);
         }
         real_part = -b  / (2.0 * a);
         complex_part =  sqrt(4 * a * c - b * b) / (2.0 * a);
-        printf("= 0.0000 is %6.4f + %6.4fi and %6.4f - %6.4fi", real_part, complex_part, real_part, complex_part);
+        if (complex_part == 1.0) {
+            printf("= 0.0000 is %6.4f + i and %6.4f - i", real_part, real_part); 
+        } else {
+            printf("= 0.0000 is %6.4f + %6.4fi and %6.4f - %6.4fi", real_part, complex_part, real_part, complex_part);
+        }
+
 
     } else {
         // real
-        if (a == 1) {
+        if (a == 1.0) {
             printf("X**2");
+        } else if (a == -1.0) {
+            printf("-X**2");
         } else {
             printf("%6.4fX**2", a);
         }
 
-        if (b > 0) {
+        if (b == 1.0) {
+            printf("+ X");
+        } else if (b > 0 ) {
             printf("+ %6.4fX", b);
+        } else if (b == -1.0) {
+            printf("- X");
         } else if (b < 0) {
             printf("%6.4fX", b);
         }
@@ -56,7 +73,7 @@ int main(void) {
         if (c > 0) {
             printf("+ %6.4f", c);
         } else if (c < 0) {
-            printf("- %6.4f", c);
+            printf(" %6.4f", c);
         }
 
         if (judge == 0.0) {
