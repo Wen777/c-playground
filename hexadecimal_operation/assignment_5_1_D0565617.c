@@ -27,8 +27,10 @@ int main(void) {
         printChar(18, '-');
         printf("\n");
         printf("  %16llX\n", input_1 + input_2);
-        if(!((int)(input_1  - 0xFFFFFFFFFFFFFFFF +  input_2) >= 0 )) {
-            printf("%llu + %llu = %llu ****Overflow!!!\n\n", input_1 , input_2, input_1 + input_2);
+        long long flag = 0xFFFFFFFFFFFFFFFF - input_1;
+        printf("flag %lld\n", flag);
+        if(  flag <  input_2 ) {
+            printf("%llu + %llu = %llu ***Overflow!!!\n\n", input_1 , input_2, input_1 + input_2);
 
         } else {
             printf("%llu + %llu = %llu\n\n", input_1 , input_2, input_1 + input_2);
