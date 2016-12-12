@@ -63,6 +63,15 @@ int main(void) {
     }
     // According to the [Vigenère_cipher](https://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher), we know the
     // Algebraic description of Vigenère cipher.
+    //
+    // For Vigenere cipher
+    // Encoding:
+    // P = V + C
+    // V is encode book / rule. C is the original character / data.
+    // P is encoded character.
+    //
+    // Decoding:
+    // C = P - V
     decoded_text[i] = decode_book[encode_book[(j - z + 26 ) % 26] - 'A'];
   }
   encoded_text[i] = '\0'; // Insert end-of-string.
