@@ -15,6 +15,8 @@ double Riemann_sum_area(double x, double b, double (*f)(double), int *T) {
   double last; // Riemann sum of the previous iteration.
   int i; // Loop variable.
 
+  printf("b %lf x %lf \n", b, x);
+
   *T = 1;
   area = -1;
   last = -2;
@@ -24,7 +26,7 @@ double Riemann_sum_area(double x, double b, double (*f)(double), int *T) {
     last = area; // The area of the previous iteration.
     area = 0; // Initial area to zero.
     for (i=0; i<*T; i++) { // Compute bar area of all intervals.
-      area += fabs((*f)(point) - a * 0.5) * interval; // Accumulate the area of Riemann sum.
+      area += fabs((*f)(point) - (a * 0.5)) * interval; // Accumulate the area of Riemann sum.
       point += interval; // The middle point of the next interval.
     }
     // Outpu the number of intervals, interval size, and area of this iteration.
@@ -36,7 +38,7 @@ double Riemann_sum_area(double x, double b, double (*f)(double), int *T) {
 }
 
 double area1_func1 (double point) {
-    return sqrt(a * a  -  pow(point / 2.0, 2.0) );
+    return sqrt((a * a)  -  (point * point  ) );
 }
 
 int main(void) {
@@ -51,7 +53,7 @@ int main(void) {
         break;
     }
 
-    area1 = 4.0 * Riemann_sum_area(a / 2.0 , sqrt(3.0) * a / 2.0, area1_func1, &T);
+    area1 = 4.0 * Riemann_sum_area(a / 2.0 , sqrt(3.0) * 0.5 * a , area1_func1, &T);
     area2 = (PI * pow(a, 2.0) - 2 * pow(a, 2.0)) - 2.0 * area1;
     area3 = pow(a, 2.0) - area1 - area2;
     printf("Area R1 %6.4lf, Area R2 %6.4lf, Area R3 %6.4lf %lf\n", area1, area2, area3, area1 + area2 + area3);
