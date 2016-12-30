@@ -20,14 +20,14 @@ int max(int x, int y) {
    U: nxn upper triangular matrix.
    Compute A=LU.
 */
-void LU_decompose(int n, float A[100][100], float L[100][100], float U[100][100]) {
+void LU_decompose(int n, float A[100][100], float L[100][100], float U[100][100], int r, int s) {
   int i, j, k;
 
   for (k=0; k<n; k++) { // To compute submatrix A(k+1).
-    for (j=k; j<n; j++) U[k][j] = A[k][j]; // Compute elements of the k-th row of matrix U
-    for (i=k; i<n; i++) L[i][k] = A[i][k] / A[k][k]; // Compute elements of the k-th column of matrix L
-    for (i=k+1; i<n; i++) // Compute elements of submatrix A(k+1):
-      for (j=k+1; j<n; j++) A[i][j] = A[i][j] - L[i][k] * U[k][j];
+    for (j=k; j<min(n - 1, k+s) + 1; j++) U[k][j] = A[k][j]; // Compute elements of the k-th row of matrix U
+    for (i=k; i<min(n - 1, k+r) + 1; i++) L[i][k] = A[i][k] / A[k][k]; // Compute elements of the k-th column of matrix L
+    for (i=k+1; i<min(n - 1, k+r) - 1; i++) // Compute elements of submatrix A(k+1):
+      for (j=max(k+1, i-r); j<min(n - 1, min(i+s, k+s)) - 1; j++) A[i][j] = A[i][j] - L[i][k] * U[k][j];
   }
 }
 
@@ -57,7 +57,7 @@ int main(void) {
     printf("\n");
   }
 
-  LU_decompose(n, A, L, U); // Peform LU-decomposition.
+  LU_decompose(n, A, L, U, r, s); // Peform LU-decomposition.
 
   /* printf("\nMatrix L:\n"); // Output matrix L. */
   /* for (i=0; i<n; i++) { */
