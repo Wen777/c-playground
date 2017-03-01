@@ -4,28 +4,62 @@
 
 #include "rational_number_D0565617.h"
 
-// Test case 1/2 + -1/3
-//          1/2 + 1/3
-//          1/3 + 1/2
-//          1/3 + -1/2
+// gcd
+int gcd(int m, int n) {
+    m = abs(m);
+    n = abs(n);
+
+    if (m%n == 0) {
+        return n;
+    } else {
+        return gcd(n, m % n);
+    }
+}
+void ensureGcd(Fraction *fraction) {
+    int divisor = gcd(abs(fraction->numerator), abs(fraction->denominator));
+
+    fraction->numerator = fraction->numerator / divisor;
+    fraction->denominator = fraction->denominator / divisor;
+}
+
+// validFraction if is validate fraction return 1; else return 0;
+int validFraction(Fraction *fraction) {
+    if(fraction->denominator == 0) {
+        fraction->numerator = 0;
+        fraction->denominator = 1;
+        return 0;
+    }
+
+    return 1;
+}
+
 Fraction fractionAddition(Fraction a, Fraction b) {
     a.numerator = a.numerator * b.denominator + b.numerator * a.denominator;
     a.denominator = a.denominator * b.denominator;
-    ensureGcd(&a);
+
+    if(validFraction(&a)){
+        ensureGcd(&a);
+    };
     return a;
 };
 
 Fraction fractionSubtraction(Fraction a, Fraction b) {
     a.numerator = a.numerator * b.denominator - b.numerator * a.denominator;
     a.denominator = a.denominator * b.denominator;
-    ensureGcd(&a);
+
+    if(validFraction(&a)){
+        ensureGcd(&a);
+    };
     return a;
 }
 
 Fraction fractionMultiplication(Fraction a, Fraction b) {
     a.numerator = a.numerator * b.numerator;
     a.denominator = a.denominator * b.denominator;
-    ensureGcd(&a);
+
+    if(validFraction(&a)){
+        ensureGcd(&a);
+    };
     return a;
 }
 
@@ -36,14 +70,20 @@ Fraction fractionDivision(Fraction a, Fraction b) {
     }
     a.numerator = a.numerator * b.denominator;
     a.denominator = b.numerator * a.denominator;
-    ensureGcd(&a);
+
+    if(validFraction(&a)){
+        ensureGcd(&a);
+    };
     return a;
 }
 
 Fraction fractionAbs(Fraction a) {
     a.numerator = abs(a.numerator);
     a.denominator = abs(a.denominator);
-    ensureGcd(&a);
+
+    if(validFraction(&a)){
+        ensureGcd(&a);
+    };
     return a;
 }
 
@@ -62,7 +102,9 @@ Fraction intsToFraction(int a, int b) {
 
     fraction.numerator = a;
     fraction.denominator = b;
-    ensureGcd(&fraction);
+    if(validFraction(&fraction)){
+        ensureGcd(&fraction);
+    };
     return fraction;
 }
 
@@ -71,30 +113,13 @@ Fraction intToFraction(int a) {
     fraction.numerator = a;
     fraction.denominator = 1;
 
-    ensureGcd(&fraction);
+    if(validFraction(&fraction)){
+        ensureGcd(&fraction);
+    };
     return fraction;
 }
 
 void PrintFraction(Fraction a) {
     printf("%d/%d\n", a.numerator, a.denominator);
-}
-
-void ensureGcd(Fraction *fraction) {
-    int divisor = GCD(abs(fraction->numerator), abs(fraction->denominator));
-
-    fraction->numerator = fraction->numerator / divisor;
-    fraction->denominator = fraction->denominator / divisor;
-}
-
-// GCD
-int GCD(int m, int n) {
-    m = abs(m);
-    n = abs(n);
-
-    if (m%n == 0) {
-        return n;
-    } else {
-        return GCD(n, m % n);
-    }
 }
 

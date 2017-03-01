@@ -27,7 +27,3 @@ Fraction intToFraction(int a);
 
 // Print a rational number.
 void PrintFraction(Fraction a);
-
-void ensureGcd(Fraction *fraction);
-
-int GCD(int m, int n);
