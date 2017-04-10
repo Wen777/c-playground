@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
   int fillings;             // Number of bytes of padding 0's.
   int i, j, k;              // Loop variable.
 
-  unsigned char * smallImageData;
+  unsigned char *smallImageData;
   int smallRowSize;
   int smallFillings;
   int m;
@@ -108,18 +108,32 @@ int main(int argc, char *argv[])
 
   fclose(fptr); // Close the input file.
 
+  smallWidth = header.Width / 2;
+  smallHeight = header.Height / 2;
+  smallFillings = (4 - (smallWidth * 3) % 4) % 4;
+  smallRowSize = smallWidth * 3 + smallFillings;
+  smallImageSize = smallHeight * smallRowSize;
+  smallImageData = (unsigned char *)malloc(smallImageSize);
+
   fillings = (4 - (header.Width * 3) % 4) % 4; // The number of filling bytes at the end of a row.
   rowSize = header.Width * 3 + fillings;       // The number of bytes in a row.
-  for (i = 0; i < header.Height; i++)
+  for (i = 0; i < header.Height; i += 2)
   { // Go through all rows.
-    for (j = 0; j < header.Width; j++)
-    {                                                                                            // Go through all pixels in row i.
-      k = i * rowSize + j * 3;                                                                   // The starting index in imageData of the pixel to be transformed.
-      imageData[k] = (imageData[k] * 28 + imageData[k + 1] * 151 + imageData[k + 2] * 77) / 256; // value of B
-      imageData[k + 1] = imageData[k];                                                           // Copy to value of G.
-      imageData[k + 2] = imageData[k];                                                           // Copy to value of R.
+    for (j = 0; j < header.Width; j += 2)
+    {                          // Go through all pixels in row i.
+      k = i * rowSize + j * 3; // The starting index in imageData of the pixel to be transformed.
+      m = (i / 2) * smallRowSize + (j / 2) * 3;
+
+      smallImageData[m] = imageData[k];         // value of B
+      smallImageData[m + 1] = imageData[k + 1]; // Copy to value of G.
+      smallImageData[m + 2] = imageData[k + 2]; // Copy to value of R.
     }
   }
+
+  header.Width = smallWidth;
+  header.Height = smallHeight;
+  header.ImageSize = smallImageSize;
+  header.Size = header.ImageSize + header.OffsetBits;
 
   // If the input command has three strings, use the 3rd one as the output file name;
   // otherwise, use the default file name "gray_level.bmp".
@@ -151,7 +165,7 @@ int main(int argc, char *argv[])
   fwrite(&header.ImportantColors, 4, 1, fptr); // Number of colors that are considered important when rendering the image.
 
   fwrite(palette, 1, header.OffsetBits - header.InfoSize - 14, fptr); // Write the palette.
-  fwrite(imageData, 1, header.ImageSize, fptr);                       // Write the image pixel data.
+  fwrite(smallImageData, 1, header.ImageSize, fptr);                       // Write the image pixel data.
   fclose(fptr);                                                       // Close the output file.
 
   // Print the gray-level image file head.
@@ -179,5 +193,7 @@ int main(int argc, char *argv[])
 
   free(palette);   // Release memory space of palette.
   free(imageData); // Release memory space of image pixel data.
+
+  free(smallImageData);
   return 0;
 }
