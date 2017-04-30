@@ -20,18 +20,17 @@ void banglaNumber(char *string) {
 
   // if value of length of string is bigger than 9, split it
   if (len > 9) {
-
     char *tempString;
     tempString = (char *)malloc(sizeof(char) * (len - 7 + 1));
     strncpy(tempString, string, len - 7);
     tempString[len - 7] = '\0';
 
     banglaNumber(tempString);
-    printf("kuti ");
+    printf(" kuti");
     flag = 0;
   }
 
-  // convert char into integer 
+  // convert char into integer
   for (i = 0; i < len; i++) {
     switch (len - i) {
       case 1:
@@ -68,23 +67,23 @@ void banglaNumber(char *string) {
 
   // print result
   if (kutiNum != 0 && flag != 0) {
-    printf("%d kuti ", kutiNum);
+    printf(" %d kuti", kutiNum);
   }
 
   if (lakhNum != 0) {
-    printf("%d lakh ", lakhNum);
+    printf(" %d lakh", lakhNum);
   }
 
   if (hajarNum != 0) {
-    printf("%d hajar ", hajarNum);
+    printf(" %d hajar", hajarNum);
   }
 
   if (shataNum != 0) {
-    printf("%d shata ", shataNum);
+    printf(" %d shata", shataNum);
   }
 
   if (constNum != 0) {
-    printf("%d ", constNum);
+    printf(" %d", constNum);
   }
 }
 
@@ -94,8 +93,11 @@ int main(void) {
   count = 1;
 
   while (scanf("%s", input) != EOF) {
-    printf("%3d. ", count++);
+    printf("%3d.", count++);
     banglaNumber(input);
+    if (strcmp("0", input) == 0) {
+      printf(" %s", input);
+    }
     printf("\n");
   }
 
